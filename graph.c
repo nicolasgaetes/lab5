@@ -36,7 +36,16 @@ Graph* createGraph() {
 }
 
 void addNode(Graph* g, const char* label) {
+    //verifico que el grafo y el nombre existan
     if (!g || !label) return;
+    //busco si el nodo ya existe en el mapa
+    MapPair* pair = map_search(g->adjacencyMap, (void*)label);
+    //si ya existe, no hago nada
+    if (pair != NULL) return;
+    //creo una lista de adyacencia vacia
+    List* adjList = list_create();
+    //inserto el nodo en el mapa
+    map_insert(g->adjacencyMap, strdup(label), adjList);
 
 }
 
