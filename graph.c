@@ -50,7 +50,24 @@ void addNode(Graph* g, const char* label) {
 }
 
 void addEdge(Graph* g, const char* src, const char* dest, int weight) {
+    //verifico que el grafo, origen y destino existan
     if (!g || !src || !dest) return;
+    //agrego el nodo origen si no existe
+    addNode(g, src);
+    //agrego el nodo destino si no existe
+    addNode(g, dest);
+    ///busco el nodo origen en el mapa
+    MapPair* pair = map_search(g->adjacencyMap, (void*)src);
+    //obtengo la lista de adyacencia del nodo origen
+    List* adjList = pair->value;
+    //creo una nueva arista
+    Edge* edge = malloc(sizeof(Edge));
+    //guardo el destino de la arista
+    edge->target = strdup(dest);
+    //guardo el peso de la arista
+    edge->weight = weight;
+    //agrego la arista a la lista del nodo origen
+    list_pushBack(adjList, edge);
 
 }
 
