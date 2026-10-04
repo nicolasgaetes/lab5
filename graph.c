@@ -36,38 +36,12 @@ Graph* createGraph() {
 }
 
 void addNode(Graph* g, const char* label) {
-    //verifico que el grafo y el nombre existan
     if (!g || !label) return;
-    //busco si el nodo ya existe en el mapa
-    MapPair* pair = map_search(g->adjacencyMap, (void*)label);
-    //si ya existe, no hago nada
-    if (pair != NULL) return;
-    //creo una lista de adyacencia vacia
-    List* adjList = list_create();
-    //inserto el nodo en el mapa
-    map_insert(g->adjacencyMap, strdup(label), adjList);
 
 }
 
 void addEdge(Graph* g, const char* src, const char* dest, int weight) {
-    //verifico que el grafo, origen y destino existan
     if (!g || !src || !dest) return;
-    //agrego el nodo origen si no existe
-    addNode(g, src);
-    //agrego el nodo destino si no existe
-    addNode(g, dest);
-    ///busco el nodo origen en el mapa
-    MapPair* pair = map_search(g->adjacencyMap, (void*)src);
-    //obtengo la lista de adyacencia del nodo origen
-    List* adjList = pair->value;
-    //creo una nueva arista
-    Edge* edge = malloc(sizeof(Edge));
-    //guardo el destino de la arista
-    edge->target = strdup(dest);
-    //guardo el peso de la arista
-    edge->weight = weight;
-    //agrego la arista a la lista del nodo origen
-    list_pushBack(adjList, edge);
 
 }
 
