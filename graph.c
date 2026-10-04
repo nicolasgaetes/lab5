@@ -36,7 +36,16 @@ Graph* createGraph() {
 }
 
 void addNode(Graph* g, const char* label) {
+    //verifico que el grafo y el nombre existan
     if (!g || !label) return;
+    //busco si el nodo ya existe en el mapa
+    MapPair* pair = map_search(g->adjacencyMap, (void*)label);
+    //si ya existe, no hago nada
+    if (pair != NULL) return;
+    //creo una lista de adyacencia vacia
+    List* adjList = list_create();
+    //inserto el nodo en el mapa
+    map_insert(g->adjacencyMap, strdup(label), adjList);
 
 }
 
@@ -60,26 +69,10 @@ int getWeight(Graph* g, const char* label1, const char* label2) {
 
 // Retorna una nueva List* que contiene elementos de tipo char* (las etiquetas)
 List* getAdjacentLabels(Graph* g, const char* label) {
-    //verifico que el grafo y el nombre existan
     if (!g || !label) return NULL;
-    //busco el nodo origen en el mapa
-    MapPair* pair = map_search(g->adjacencyMap, (void*)label);
-    //si el nodo no existe, retorno NULL
-    if (pair == NULL) return NULL;
-    //obtengo la lista de aristas
-    List* edges = pair->value;
-    //creo una nueva lista para guardar las etiquetas
-    List* labels = list_create();
-    //comienzo a recorrer las aristas
-    Edge* edge = list_first(edges);
-    while (edge != NULL) {
-        //agrego el nombre del nodo destino
-        list_pushBack(labels, edge->target);
-        //avanzo a la siguiente arista
-        edge = list_next(edges);
-    }
-    //retorno la lista de etiquetas
-    return labels; 
+
+
+    return NULL; 
 }
 
 void destroyGraph(Graph* g) {
