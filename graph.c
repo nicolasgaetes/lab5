@@ -83,8 +83,23 @@ List* getEdges(Graph* g, const char* label) {
 }
 
 int getWeight(Graph* g, const char* label1, const char* label2) {
+    //reviso que exista el grafo y los nombres
     if (!g || !label1 || !label2) return -1;
-
+    // busco el nodo origen en el mapa
+    MapPair* pair = map_search(g->adjacencyMap, (void*)label1);
+    //si el origen no existe, retorno -1
+    if (pair == NULL) return -1;
+    //obtengo la lista de aristas del nodo origen
+    List* adjList = pair->value;
+    // recorro la lista de aristas
+    Edge* edge = list_first(adjList);
+    while (edge != NULL) {
+        //si encontramos el destino, retornamos su peso
+        if (strcmp(edge->target, label2) == 0) {
+            return edge->weight;
+        }
+        edge = list_next(adjList);
+    }
     // Si no existe el origen o terminamos de iterar sin encontrar el destino
     return -1; 
 }
